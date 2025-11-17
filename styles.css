@@ -775,6 +775,41 @@ body {
 .footer p {
     margin-bottom: 0.3rem;
 }
+/* Single row for teaching interests */
+.interest-grid-single-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.interest-item-compact {
+    background: var(--white);
+    padding: 0.75rem 1.25rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.interest-item-compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.interest-item-compact i {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+.interest-item-compact span {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
 
 /* Responsive Design */
 @media (max-width: 968px) {
