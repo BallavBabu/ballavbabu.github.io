@@ -165,7 +165,7 @@ if ('loading' in HTMLImageElement.prototype) {
 // Update footer date automatically (Month Year)
 const date = new Date();
 const currentYear = date.getFullYear();
-const currentMonth = date.toLocaleString('en-US', { month: 'long' }); // e.g., "November"
+const currentMonth = date.toLocaleString('en-US', { month: 'long' });
 const footerText = document.querySelector('.footer p');
 
 if (footerText) {
