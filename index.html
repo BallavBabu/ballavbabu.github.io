@@ -103,13 +103,13 @@
             <div class="hero-content">
                 <img src="files/profile.jpg" alt="Lila Ballav Bhusal" class="profile-photo">
                 
-                <h1>Lila Ballav Bhusal, PhD</h1>
+                <h1>Lila Ballav Bhusal, Ph.D.</h1>
                 
                 <h2>Quantitative Economist | Yokohama National University</h2>
 
                 <p class="tagline">
-                    Specializing in Multi-Region Input–Output (MRIO) analysis, Global Value Chains (GVC), 
-                    International Trade, Structural Decomposition Analysis (SDA), and Developing Economics.
+                    Specialising in Multi-Region Input–Output (MRIO) analysis, Global Value Chains (GVC), 
+                    International Trade, Structural Decomposition Analysis (SDA), and Regional Economics.
                 </p>
 
                 <div class="hero-links">
@@ -457,7 +457,28 @@
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h4>Email</h4>
-                            <a href="mailto:bhusal-ballav-kd@ynu.jp">bhusal-ballav-kd@ynu.jp</a>
+                            <span id="email-container"></span>
+                            
+                            <script>
+                                (function() {
+                                    var container = document.getElementById("email-container");
+                                    
+                                    function addEmail(user, domain) {
+                                        var link = document.createElement("a");
+                                        link.href = "mailto:" + user + "@" + domain;
+                                        link.innerText = user + "@" + domain;
+                                        link.style.display = "block"; // Forces them to stack vertically
+                                        link.style.marginBottom = "4px"; // Adds small space between them
+                                        container.appendChild(link);
+                                    }
+
+                                    // 1. University Email
+                                    addEmail("bhusal-ballav-kd", "ynu.jp");
+                                    
+                                    // 2. Gmail
+                                    addEmail("krish.bhula", "gmail.com");
+                                })();
+                            </script>
                         </div>
                     </div>
                     <div class="contact-item">
