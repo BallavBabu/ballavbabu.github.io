@@ -195,12 +195,30 @@ body {
     font-weight: 700;
 }
 
-.hero h2 {
+/* Original h2 is removed, replaced by specific classes below */
+/* .hero h2 {
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 1rem;
     color: #ecf0f1;
+} */
+
+/* --- START NEW HERO HEADER STYLES --- */
+.hero .main-role {
+    font-size: 1.5rem;
+    font-weight: 500; /* Slightly heavier than university */
+    margin-bottom: 0.5rem; /* Space between role and university */
+    color: #ecf0f1; /* Light color for role */
 }
+
+.hero .main-university {
+    font-size: 1.3rem; /* Slightly smaller than role */
+    font-weight: 400;
+    margin-bottom: 1rem; /* Space below university before tagline */
+    color: #b9c1c9; /* Slightly darker light color */
+}
+/* --- END NEW HERO HEADER STYLES --- */
+
 
 .tagline {
     font-size: 1rem;
@@ -866,8 +884,13 @@ body {
         font-size: 2rem;
     }
     
-    .hero h2 {
+    /* Responsive adjustment for new header structure */
+    .hero .main-role {
         font-size: 1.2rem;
+    }
+    
+    .hero .main-university {
+        font-size: 1.1rem;
     }
     
     .section-title {
