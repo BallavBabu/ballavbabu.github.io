@@ -162,11 +162,14 @@ if ('loading' in HTMLImageElement.prototype) {
     document.body.appendChild(script);
 }
 
-// Update footer year automatically
-const currentYear = new Date().getFullYear();
+// Update footer date automatically (Month Year)
+const date = new Date();
+const currentYear = date.getFullYear();
+const currentMonth = date.toLocaleString('en-US', { month: 'long' }); // e.g., "November"
 const footerText = document.querySelector('.footer p');
-if (footerText && footerText.textContent.includes('2025')) {
-    footerText.textContent = footerText.textContent.replace('2025', currentYear);
+
+if (footerText) {
+    footerText.innerHTML = `&copy; ${currentMonth} ${currentYear} Lila Ballav Bhusal. All rights reserved.`;
 }
 
 // Subtle parallax effect on hero (desktop only)
