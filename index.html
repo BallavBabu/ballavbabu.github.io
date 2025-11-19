@@ -83,6 +83,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#education">Education</a></li>
                 <li><a href="#research">Research</a></li>
+                <li><a href="#projects">Projects</a></li><!-- NEW -->
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#presentations">Presentations</a></li>
                 <li><a href="#teaching">Teaching</a></li>
@@ -290,6 +291,31 @@
         </div>
     </section>
 
+    <!-- NEW PROJECTS SECTION -->
+    <section id="projects" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+
+            <div class="publications-container">
+                <div class="publication">
+                    <h3>
+                        <a href="https://github.com/BallavBabu/adbmrio" target="_blank">
+                            adbmrio (R package)
+                        </a>
+                    </h3>
+                    <p class="pub-journal">
+                        R package for ADB MRIO-based global value chain and embodied CO<sub>2</sub> analysis.
+                    </p>
+                    <p class="pub-abstract">
+                        I developed this package for input–output practitioners who need reproducible tools 
+                        for bilateral export decomposition, national GVC indicators, and value-added and 
+                        emission accounting for 63 economies and 35 sectors over 2000–2023.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="publications" class="section bg-light">
         <div class="container">
             <h2 class="section-title">Publications</h2>
@@ -491,8 +517,8 @@
                                         var link = document.createElement("a");
                                         link.href = "mailto:" + user + "@" + domain;
                                         link.innerText = user + "@" + domain;
-                                        link.style.display = "block"; // Forces them to stack vertically
-                                        link.style.marginBottom = "4px"; // Adds small space between them
+                                        link.style.display = "block";
+                                        link.style.marginBottom = "4px";
                                         container.appendChild(link);
                                     }
 
