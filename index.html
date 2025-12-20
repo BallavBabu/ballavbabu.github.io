@@ -146,12 +146,15 @@
                         opacity: 0.8;
                     }
 
-                    /* Accurate Brand Colors */
-                    .orcid { color: #A6CE39; }          /* ORCID Green */
-                    .github { color: #333333; }         /* GitHub Black */
-                    .google-scholar { color: #4285F4; } /* Google Blue */
-                    .linkedin { color: #0077B5; }       /* LinkedIn Blue */
-                    .researchmap { color: #009944; }    /* researchmap Green */
+                    /* Accurate Brand Colors with !important to ensure they override theme resets */
+                    .social-links a.orcid { color: #A6CE39 !important; }          /* ORCID Green */
+                    .social-links a.github { color: #333333 !important; }         /* GitHub Black */
+                    .social-links a.google-scholar { color: #4285F4 !important; } /* Google Blue */
+                    .social-links a.linkedin { color: #0077B5 !important; }       /* LinkedIn Blue */
+                    .social-links a.researchmap { color: #009944 !important; }    /* researchmap Green */
+                    
+                    /* Theme-specific visibility adjustment for GitHub icon */
+                    body.dark-mode .social-links a.github { color: #f0f0f0 !important; }
                 </style>
 
                 <div class="social-links">
