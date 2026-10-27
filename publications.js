@@ -15,24 +15,24 @@
     return el;
   }
   function externalLink(label, href, className) {
-    const link = element('a', className, label); link.href = href;
+    const link = element('a', className, label); link.href = href; link.target = '_blank'; link.rel = 'noopener';
     return link;
   }
   function render(works) {
     const fragment = document.createDocumentFragment();
     for (const work of works) {
-      const row = element('li', 'publication');
-      row.append(element('span', 'publication-year', String(work.year)));
-      const body = element('div', 'publication-body');
-      const heading = element('h3'); heading.append(externalLink(work.title, model.linkOf(work))); body.append(heading);
-      if (work.authors?.length) body.append(element('p', 'publication-authors', work.authors.join(' · ')));
-      body.append(element('p', 'publication-journal', [work.journal, work.citation].filter(Boolean).join(' · ')));
+      const row = element('div', 'publication');
+      const heading = element('h4');
+      heading.append(externalLink(work.title, model.linkOf(work))); row.append(heading);
+      row.append(element('p', 'pub-authors', (work.authors?.length ? work.authors.join(' · ') + ' ' : '') + '(' + work.year + ').'));
+      const journal = element('p', 'pub-journal');
+      journal.append(element('em', '', work.journal));
+      if (work.citation) journal.append(document.createTextNode(', ' + work.citation));
+      journal.append(document.createTextNode('.')); row.append(journal);
       const note = work.note || (Number(work.year) > new Date().getFullYear() ? work.year + ' issue' : '');
-      if (note) body.append(element('span', 'publication-note', note));
-      row.append(body);
-      const link = externalLink(work.doi ? 'DOI ↗' : 'ORCID ↗', model.linkOf(work), 'publication-doi');
-      link.setAttribute('aria-label', (work.doi ? 'DOI for ' : 'ORCID record for ') + work.title); row.append(link);
-      fragment.append(row);
+      if (note) row.append(element('p', 'pub-abstract', note));
+      const link = externalLink(work.doi ? 'DOI: ' + work.doi : 'ORCID record ↗', model.linkOf(work), 'pub-link');
+      row.append(link); fragment.append(row);
     }
     list.replaceChildren(fragment);
   }
