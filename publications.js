@@ -21,7 +21,7 @@
   function render(works) {
     const fragment = document.createDocumentFragment();
     for (const work of works) {
-      const row = element('div', 'publication');
+      const row = element('article', 'publication');
       const heading = element('h4');
       const link = element('a', '', work.title);
       link.href = model.linkOf(work); link.target = '_blank'; link.rel = 'noopener';
@@ -39,20 +39,11 @@
       if (work.journal) journal.append(element('em', '', work.journal));
       if (work.citation) journal.append((work.journal ? ', ' : '') + work.citation);
       if (journal.hasChildNodes()) row.append(journal);
-      const note = work.status === 'accepted' ? 'Under production' : work.note;
-      if (note) row.append(element('p', 'pub-abstract', note));
+      if (work.note) row.append(element('p', 'pub-abstract', work.note));
       fragment.append(row);
     }
+    if (!works.length) fragment.append(element('p', '', 'No public journal articles are currently listed on ORCID.'));
     list.replaceChildren(fragment);
-    const manuscripts = document.querySelector('#manuscripts');
-    if (manuscripts) {
-      const entries = manuscripts.querySelectorAll('[data-manuscript-title]');
-      const published = works.filter(work => work.status !== 'accepted');
-      for (const entry of entries) {
-        entry.hidden = Boolean(model.matchWork(published, {title: entry.dataset.manuscriptTitle}));
-      }
-      if (entries.length) manuscripts.hidden = [...entries].every(entry => entry.hidden);
-    }
   }
   function readCache() {
     try {
@@ -61,7 +52,10 @@
         // The previous cache combined hand-edited and public records. Only the latter
         // have an ORCID put-code and can stand as evidence of a public journal entry.
         const old = JSON.parse(localStorage.getItem('lbb-publications-2026-10-26-v1'));
-        if (Array.isArray(old?.works)) cache = {savedAt: 0, works: old.works.filter(w => /^\d+$/.test(w?.putCode))};
+        if (Array.isArray(old?.works)) {
+          const works = old.works.filter(w => /^\d+$/.test(w?.putCode));
+          if (works.length) cache = {savedAt: 0, works};
+        }
       }
       if (!Number.isFinite(cache?.savedAt) || !Array.isArray(cache.works)) return null;
       if (!cache.works.every(w => typeof w?.title === 'string' && typeof w.year === 'string' &&
@@ -91,8 +85,6 @@
       const incoming = model.parseWorks(await fetchJSON('works'));
       const pending = [];
       for (const work of incoming) {
-        const verified = model.matchWork(base, work);
-        if (verified?.authors?.length) { work.authors = verified.authors; continue; }
         const prior = model.matchWork(cached?.works || [], work);
         if (prior) {
           work.authors = prior.authors;

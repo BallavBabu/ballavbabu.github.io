@@ -69,28 +69,19 @@
     return works;
   }
   function mergeWorks(curated, incoming) {
-    const works = curated.map(w => ({...w}));
-    for (const live of incoming) {
-      const saved = matchWork(works, live);
-      if (!saved) {
-        works.push({...live});
-        continue;
-      }
-      const accepted = saved.status === 'accepted';
-      // A live journal record supersedes a provisional entry. Its acceptance year is
-      // not necessarily the publication year. Retain independently verified author order.
-      saved.status = 'published';
-      saved.doi = normalizeDOI(saved.doi) || live.doi;
-      saved.putCode = live.putCode;
-      saved.authors = saved.authors?.length ? saved.authors : live.authors;
-      saved.journal ||= live.journal;
-      saved.year = accepted ? live.year : saved.year || live.year;
-      saved.sortDate = accepted ? live.sortDate : saved.sortDate || live.sortDate;
-      if (accepted) saved.note = '';
-    }
-    return works.sort((a, b) => Number(b.status === 'accepted') - Number(a.status === 'accepted')
-      || Number(!b.year) - Number(!a.year)
-      || Number(b.year) - Number(a.year)
+    // A snapshot supplements citations for records still public on ORCID.
+    // An article removed from the public list must disappear from the website.
+    const works = incoming.map(live => {
+      const saved = matchWork(curated, live);
+      if (!saved) return live;
+      return {...live,
+        authors: live.authors?.length ? live.authors : saved.authors,
+        doi: live.doi || saved.doi, journal: live.journal || saved.journal,
+        year: live.year || saved.year, sortDate: live.sortDate || saved.sortDate,
+        citation: saved.citation, note: saved.note
+      };
+    });
+    return works.sort((a, b) => Number(b.year) - Number(a.year)
       || (b.sortDate || '').localeCompare(a.sortDate || '') || a.title.localeCompare(b.title));
   }
   function authorsOf(work) {

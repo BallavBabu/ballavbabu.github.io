@@ -160,10 +160,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1;
     object-fit: cover;
     object-position: 50% 35%;
-    border-radius: .25rem;
+    border-radius: 50%;
 }
 
 h1, h2, h3, h4 { color: var(--ink); }
@@ -196,7 +196,7 @@ h1, h2, h3, h4 { color: var(--ink); }
     font-size: .91rem;
 }
 
-.contact-line { margin: .65rem 0 0; font-size: .95rem; }
+.contact-line { margin: .65rem 0 0; font-size: .95rem; overflow-wrap: anywhere; }
 .profile-links { margin: .65rem 0 0; }
 .resource-links { margin: .35rem 0 0; }
 
@@ -291,6 +291,7 @@ footer > p {
     .container { width: min(100% - 2rem, 59rem); }
     .navbar > .container { flex-wrap: wrap; gap: .35rem .9rem; padding-block: .4rem; }
     .navbar .nav-menu { gap: .25rem .9rem; }
+    .mobile-menu-toggle, .theme-control { min-height: 44px; }
     .navbar.menu-ready .mobile-menu-toggle { display: inline-block; }
     .navbar.menu-ready .nav-menu {
         display: none;
@@ -298,13 +299,16 @@ footer > p {
         inset: 100% 0 auto;
         align-items: stretch;
         flex-direction: column;
+        flex-wrap: nowrap;
         gap: 0;
         padding: .25rem 1rem .65rem;
         background: var(--nav);
         border-bottom: 1px solid #869baa;
+        max-height: calc(100dvh - 4rem);
+        overflow-y: auto;
     }
     .navbar.menu-ready .nav-menu.active { display: flex; }
-    .navbar.menu-ready .nav-menu a { display: block; padding: .65rem .2rem; }
+    .navbar.menu-ready .nav-menu a { display: block; min-height: 44px; padding: .75rem .2rem; }
     .hero-content { grid-template-columns: 7.25rem minmax(0, 1fr); gap: 1.25rem; }
     .hero-bio { font-size: 1rem; }
     main > section:not(.hero) { padding-top: 1.65rem; }
@@ -314,8 +318,7 @@ footer > p {
     .hero { padding-block: 1.65rem; }
     .hero-content { display: block; }
     .profile-photo {
-        width: 6rem;
-        height: 6.5rem;
+        width: 7rem;
         margin-bottom: .9rem;
     }
     .nav-brand { font-size: .95rem; }
