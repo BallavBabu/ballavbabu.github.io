@@ -1,48 +1,78 @@
 (() => {
   'use strict';
   const list = document.querySelector('#publication-list');
-  const model = window.PublicationModel;
-  if (!list || !model) return;
-  const base = JSON.parse(document.querySelector('#publication-snapshot').textContent);
-  const endpoint = 'https://pub.orcid.org/v3.0/0000-0002-8934-8841/';
-  const cacheKey = 'lbb-publications-2026-10-26-v1';
-  const cacheLifetime = 24 * 60 * 60 * 1000;
+  const snapshot = document.querySelector('#publication-snapshot');
   const status = document.querySelector('#publication-status');
+  const model = window.PublicationModel;
+  if (!list || !snapshot || !model) return;
+  const base = JSON.parse(snapshot.textContent);
+  const endpoint = 'https://pub.orcid.org/v3.0/0000-0002-8934-8841/';
+  const cacheKey = 'lbb-orcid-journal-articles-v2';
+  const hour = 60 * 60 * 1000;
+  let cached = readCache();
+  let refreshing = false, lastAttempt = 0;
+
   function element(tag, className, value) {
     const el = document.createElement(tag);
     if (className) el.className = className;
     if (value) el.textContent = value;
     return el;
   }
-  function externalLink(label, href, className) {
-    const link = element('a', className, label); link.href = href; link.target = '_blank'; link.rel = 'noopener';
-    return link;
-  }
   function render(works) {
     const fragment = document.createDocumentFragment();
     for (const work of works) {
       const row = element('div', 'publication');
       const heading = element('h4');
-      heading.append(externalLink(work.title, model.linkOf(work))); row.append(heading);
-      row.append(element('p', 'pub-authors', (work.authors?.length ? work.authors.join(' · ') + ' ' : '') + '(' + work.year + ').'));
+      const link = element('a', '', work.title);
+      link.href = model.linkOf(work); link.target = '_blank'; link.rel = 'noopener';
+      heading.append(link); row.append(heading);
+      const authors = element('p', 'pub-authors');
+      (work.authors || []).forEach((name, i) => {
+        if (i) authors.append(' · ');
+        const normalized = name.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
+        const own = ['lila ballav bhusal', 'bhusal lila ballav', 'l b bhusal', 'bhusal l b'].includes(normalized);
+        authors.append(own ? element('strong', '', name) : name);
+      });
+      if (work.year) authors.append((work.authors?.length ? ' ' : '') + '(' + work.year + ')');
+      if (authors.hasChildNodes()) row.append(authors);
       const journal = element('p', 'pub-journal');
-      journal.append(element('em', '', work.journal));
-      if (work.citation) journal.append(document.createTextNode(', ' + work.citation));
-      journal.append(document.createTextNode('.')); row.append(journal);
-      const note = work.note || (Number(work.year) > new Date().getFullYear() ? work.year + ' issue' : '');
+      if (work.journal) journal.append(element('em', '', work.journal));
+      if (work.citation) journal.append((work.journal ? ', ' : '') + work.citation);
+      if (journal.hasChildNodes()) row.append(journal);
+      const note = work.status === 'accepted' ? 'Under production' : work.note;
       if (note) row.append(element('p', 'pub-abstract', note));
-      const link = externalLink(work.doi ? 'DOI: ' + work.doi : 'ORCID record ↗', model.linkOf(work), 'pub-link');
-      row.append(link); fragment.append(row);
+      fragment.append(row);
     }
     list.replaceChildren(fragment);
+    const manuscripts = document.querySelector('#manuscripts');
+    if (manuscripts) {
+      const entries = manuscripts.querySelectorAll('[data-manuscript-title]');
+      const published = works.filter(work => work.status !== 'accepted');
+      for (const entry of entries) {
+        entry.hidden = Boolean(model.matchWork(published, {title: entry.dataset.manuscriptTitle}));
+      }
+      if (entries.length) manuscripts.hidden = [...entries].every(entry => entry.hidden);
+    }
   }
   function readCache() {
     try {
-      const cache = JSON.parse(localStorage.getItem(cacheKey));
-      if (!cache || !Number.isFinite(cache.savedAt) || !Array.isArray(cache.works)) return null;
-      if (!cache.works.every(w => typeof w.title === 'string' && /^\d{4}$/.test(String(w.year)) && Array.isArray(w.authors) && w.authors.every(a => typeof a === 'string'))) return null;
+      let cache = JSON.parse(localStorage.getItem(cacheKey));
+      if (!cache) {
+        // The previous cache combined hand-edited and public records. Only the latter
+        // have an ORCID put-code and can stand as evidence of a public journal entry.
+        const old = JSON.parse(localStorage.getItem('lbb-publications-2026-10-26-v1'));
+        if (Array.isArray(old?.works)) cache = {savedAt: 0, works: old.works.filter(w => /^\d+$/.test(w?.putCode))};
+      }
+      if (!Number.isFinite(cache?.savedAt) || !Array.isArray(cache.works)) return null;
+      if (!cache.works.every(w => typeof w?.title === 'string' && typeof w.year === 'string' &&
+        (!w.year || /^\d{4}$/.test(w.year)) && Array.isArray(w.authors) && w.authors.every(a => typeof a === 'string'))) return null;
       return cache;
     } catch { return null; }
+  }
+  function note(value) { if (status) status.textContent = value; }
+  function cacheList(savedAt, works) {
+    cached = {savedAt, works};
+    try { localStorage.setItem(cacheKey, JSON.stringify(cached)); } catch { /* In-memory fallback. */ }
   }
   async function fetchJSON(path) {
     const controller = new AbortController();
@@ -53,32 +83,52 @@
       return await response.json();
     } finally { clearTimeout(timeout); }
   }
-  async function update() {
-    const cache = readCache();
-    if (cache) render(model.mergeWorks(base, cache.works));
-    if (cache && Date.now() - cache.savedAt >= 0 && Date.now() - cache.savedAt < cacheLifetime) {
-      status.textContent = 'Showing saved publications from your recent ORCID check.';
-      return;
-    }
+  async function refresh() {
+    const now = Date.now(), age = now - (cached?.savedAt || 0);
+    if (refreshing || document.hidden || (cached && age >= 0 && age < hour) || (now - lastAttempt < 60000)) return;
+    lastAttempt = now; refreshing = true;
     try {
       const incoming = model.parseWorks(await fetchJSON('works'));
-      const known = new Map([...base, ...(cache?.works || [])].map(w => [model.normalizeDOI(w.doi) || w.title.toLowerCase(), w]));
+      const pending = [];
       for (const work of incoming) {
-        const prior = known.get(work.doi || work.title.toLowerCase());
-        if (prior?.authors?.length) { work.authors = prior.authors; continue; }
-        // Fetch author credits only for newly discovered works; never guess coauthors.
-        try { work.authors = model.authorsOf(await fetchJSON('work/' + work.putCode)); } catch { work.authors = []; }
+        const verified = model.matchWork(base, work);
+        if (verified?.authors?.length) { work.authors = verified.authors; continue; }
+        const prior = model.matchWork(cached?.works || [], work);
+        if (prior) {
+          work.authors = prior.authors;
+          work.authorsCheckedAt = prior.authorsCheckedAt || 0;
+          work.authorsRevision = prior.authorsRevision;
+          if (work.putCode === prior.putCode && work.revision === work.authorsRevision &&
+            (work.authors.length || now - work.authorsCheckedAt < 24 * hour)) continue;
+        }
+        pending.push(work);
       }
-      const works = model.mergeWorks(base, incoming);
-      render(works);
-      status.textContent = 'Public journal articles checked against ORCID.';
-      // Retry missing author credits next visit, while retaining the readable list.
-      if (incoming.every(w => w.authors.length)) {
-        try { localStorage.setItem(cacheKey, JSON.stringify({savedAt: Date.now(), works})); } catch { /* Storage may be unavailable in private browsing. */ }
+      // Keep newly discovered titles even if the tab closes before credit requests finish.
+      cacheList(now, incoming);
+      render(model.mergeWorks(base, incoming));
+      // Fetch contributor detail for up to three articles at once. The list is already
+      // readable, including any new works whose deposit did not supply contributors.
+      async function fetchCredits() {
+        while (pending.length) {
+          const work = pending.shift();
+          try {
+            const names = model.authorsOf(await fetchJSON('work/' + work.putCode));
+            work.authors = names;
+            work.authorsCheckedAt = now;
+            work.authorsRevision = work.revision;
+          } catch { /* Retain the last known byline. Retry on a later refresh. */ }
+        }
       }
+      await Promise.all(Array.from({length: Math.min(3, pending.length)}, fetchCredits));
+      cacheList(now, incoming);
+      render(model.mergeWorks(base, incoming));
+      note('Public journal articles checked against ORCID.');
     } catch {
-      status.textContent = 'Showing the saved publication list. The ORCID profile is also linked below.';
-    }
+      note('Showing saved publications. The ORCID profile is linked below.');
+    } finally { refreshing = false; }
   }
-  update();
+  if (cached) render(model.mergeWorks(base, cached.works));
+  refresh();
+  window.setInterval(refresh, hour);
+  document.addEventListener('visibilitychange', refresh);
 })();
