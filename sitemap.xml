@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://ballavbabu.github.io/</loc>
-    <lastmod>2026-11-27</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ballavbabu.github.io/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://ballavbabu.github.io/ja/"/>
-    <priority>1.0</priority>
+    <priority>1.00</priority>
   </url>
-  <url>
-    <loc>https://ballavbabu.github.io/cv.html</loc>
-    <lastmod>2026-11-27</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ballavbabu.github.io/ja/</loc>
-    <lastmod>2026-11-27</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ballavbabu.github.io/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://ballavbabu.github.io/ja/"/>
-    <priority>0.8</priority>
-  </url>
+
 </urlset>

@@ -1,31 +1,52 @@
 (() => {
-  'use strict';
-  // Mobile menu.
-  const nav = document.querySelector('.site-header');
-  const toggle = nav && nav.querySelector('.menu-toggle');
-  const menu = nav && nav.querySelector('#site-menu');
-  if (toggle && menu) {
-    nav.classList.add('menu-ready');
-    const setOpen = open => {
-      menu.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-    };
-    toggle.addEventListener('click', () => setOpen(!menu.classList.contains('open')));
-    menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
-    document.addEventListener('click', e => { if (!nav.contains(e.target)) setOpen(false); });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); toggle.focus(); }
-    });
-  }
+    const nav = document.querySelector('.navbar');
+    if (!nav) return;
 
-  // CV download links appear only once a PDF path is set in site-config.js.
-  const cv = (window.SITE_CONFIG || {}).cvPdf;
-  if (cv && /^(https:\/\/|files\/)[\w./%-]+\.pdf$/i.test(cv)) {
-    const prefix = document.documentElement.dataset.root || '';
-    const href = /^https:/.test(cv) ? cv : prefix + cv;
-    document.querySelectorAll('[data-cv-pdf]').forEach(el => {
-      el.href = href;
-      el.hidden = false;
-    });
-  }
+    const toggle = nav.querySelector('.mobile-menu-toggle');
+    const menu = nav.querySelector('#nav-menu');
+    if (toggle && menu) {
+        nav.classList.add('menu-ready');
+        const setOpen = open => {
+            menu.classList.toggle('active', open);
+            toggle.setAttribute('aria-expanded', String(open));
+        };
+
+        toggle.addEventListener('click', () => setOpen(!menu.classList.contains('active')));
+        menu.addEventListener('click', event => {
+            if (event.target.closest('a')) setOpen(false);
+        });
+        document.addEventListener('click', event => {
+            if (!nav.contains(event.target)) setOpen(false);
+        });
+        nav.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && menu.classList.contains('active')) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+        nav.addEventListener('focusout', event => {
+            if (!nav.contains(event.relatedTarget)) setOpen(false);
+        });
+        window.matchMedia('(max-width: 43rem)').addEventListener('change', () => setOpen(false));
+    }
+
+    const theme = nav.querySelector('#themeToggle');
+    if (theme) {
+        const preferred = window.matchMedia('(prefers-color-scheme: dark)');
+        let choice = null;
+        try { choice = localStorage.getItem('theme'); } catch { /* Use the system preference. */ }
+        const applyTheme = () => {
+            const dark = choice === 'dark' || (choice !== 'light' && preferred.matches);
+            document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+            theme.checked = dark;
+        };
+        applyTheme();
+        nav.classList.add('theme-ready');
+        preferred.addEventListener('change', applyTheme);
+        theme.addEventListener('change', () => {
+            choice = theme.checked ? 'dark' : 'light';
+            applyTheme();
+            try { localStorage.setItem('theme', choice); } catch { /* Keep this page's choice. */ }
+        });
+    }
 })();

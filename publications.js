@@ -12,20 +12,6 @@
   let cached = readCache();
   let refreshing = false, lastAttempt = 0;
 
-  // ORCID credit names come from each journal deposit. Some list the family
-  // name first. Map those to the order the person uses.
-  const normalized = name => name.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
-  const OWN = ['lila ballav bhusal', 'bhusal lila ballav', 'l b bhusal', 'bhusal l b', 'lila bhusal', 'bhusal lila'];
-  const DISPLAY = {
-    'rahman mohammad sayedur': 'Mohammad Sayedur Rahman',
-    'sayedur rahman mohammad': 'Mohammad Sayedur Rahman',
-    'sayedur r m': 'Mohammad Sayedur Rahman',
-    'bhusal lila ballav': 'Lila Ballav Bhusal',
-    'ishiro taku': 'Taku Ishiro',
-    'masum md': 'Md Masum'
-  };
-  const displayName = name => DISPLAY[normalized(name)] || name;
-
   function element(tag, className, value) {
     const el = document.createElement(tag);
     if (className) el.className = className;
@@ -38,13 +24,14 @@
       const row = element('article', 'publication');
       const heading = element('h4');
       const link = element('a', '', work.title);
-      link.href = model.linkOf(work);
+      link.href = model.linkOf(work); link.target = '_blank'; link.rel = 'noopener';
       heading.append(link); row.append(heading);
       const authors = element('p', 'pub-authors');
       (work.authors || []).forEach((name, i) => {
-        if (i) authors.append(', ');
-        const shown = displayName(name);
-        authors.append(OWN.includes(normalized(name)) ? element('strong', '', shown) : shown);
+        if (i) authors.append(' · ');
+        const normalized = name.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
+        const own = ['lila ballav bhusal', 'bhusal lila ballav', 'l b bhusal', 'bhusal l b'].includes(normalized);
+        authors.append(own ? element('strong', '', name) : name);
       });
       if (work.year) authors.append((work.authors?.length ? ' ' : '') + '(' + work.year + ')');
       if (authors.hasChildNodes()) row.append(authors);
@@ -52,7 +39,7 @@
       if (work.journal) journal.append(element('em', '', work.journal));
       if (work.citation) journal.append((work.journal ? ', ' : '') + work.citation);
       if (journal.hasChildNodes()) row.append(journal);
-      if (work.note) row.append(element('p', 'pub-note', work.note));
+      if (work.note) row.append(element('p', 'pub-abstract', work.note));
       fragment.append(row);
     }
     if (!works.length) fragment.append(element('p', '', 'No public journal articles are currently listed on ORCID.'));
@@ -111,7 +98,8 @@
       // Keep newly discovered titles even if the tab closes before credit requests finish.
       cacheList(now, incoming);
       render(model.mergeWorks(base, incoming));
-      // Fetch contributor detail for up to three articles at once.
+      // Fetch contributor detail for up to three articles at once. The list is already
+      // readable, including any new works whose deposit did not supply contributors.
       async function fetchCredits() {
         while (pending.length) {
           const work = pending.shift();
