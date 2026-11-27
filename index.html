@@ -3,72 +3,66 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lila Ballav Bhusal, PhD | Development Economics and Structural Change</title>
-    <meta name="description" content="Lila Ballav Bhusal is an economist studying economic development and structural change. Research papers, data, and open-source software.">
+    <title>Lila Ballav Bhusal | Applied Economist, Input-Output Analysis and Global Value Chains</title>
+    <meta name="description" content="Lila Ballav Bhusal, PhD in Economics (Yokohama National University). Research on input-output analysis, global value chains and embodied carbon in South Asia and the Asia-Pacific. Publications, working papers, data, R packages and CV.">
     <meta name="author" content="Lila Ballav Bhusal">
     <link rel="canonical" href="https://ballavbabu.github.io/">
+    <link rel="alternate" hreflang="en" href="https://ballavbabu.github.io/">
+    <link rel="alternate" hreflang="ja" href="https://ballavbabu.github.io/ja/">
     <link rel="icon" href="files/profile.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="styles.css?v=20261123b">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Lila Ballav Bhusal, PhD">
+    <meta property="og:description" content="Applied economist working on input-output analysis, global value chains and embodied carbon in Asia.">
+    <meta property="og:url" content="https://ballavbabu.github.io/">
+    <meta property="og:image" content="https://ballavbabu.github.io/files/profile.jpg">
+    <link rel="stylesheet" href="styles.css?v=20261127">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "@id": "https://ballavbabu.github.io/#person",
       "name": "Lila Ballav Bhusal",
+      "alternateName": "ブサル リラ バルラブ",
       "givenName": "Lila Ballav",
       "familyName": "Bhusal",
-      "honorificSuffix": "Ph.D.",
-      "jobTitle": "Economist",
+      "honorificSuffix": "PhD",
+      "jobTitle": "Applied economist",
       "url": "https://ballavbabu.github.io/",
       "image": "https://ballavbabu.github.io/files/profile.jpg",
+      "email": "mailto:bhusal-ballav-kd@ynu.jp",
       "affiliation": [
         {
-          "@type": "Organization",
+          "@type": "CollegeOrUniversity",
           "name": "Yokohama National University",
           "department": "Graduate School of International Social Sciences",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Yokohama",
-            "addressRegion": "Kanagawa",
-            "addressCountry": "JP"
-          }
+          "address": {"@type": "PostalAddress", "addressLocality": "Yokohama", "addressRegion": "Kanagawa", "addressCountry": "JP"}
         },
-        {
-          "@type": "Organization",
-          "name": "JICA Ogata Sadako Research Institute for Peace and Development"
-        }
+        {"@type": "ResearchOrganization", "name": "JICA Ogata Sadako Research Institute for Peace and Development"}
       ],
       "alumniOf": [
-        {
-          "@type": "CollegeOrUniversity",
-          "name": "Yokohama National University"
-        },
-        {
-          "@type": "CollegeOrUniversity",
-          "name": "Tokyo International University"
-        }
+        {"@type": "CollegeOrUniversity", "name": "Yokohama National University"},
+        {"@type": "CollegeOrUniversity", "name": "Tokyo International University"},
+        {"@type": "CollegeOrUniversity", "name": "Tribhuvan University"}
       ],
+      "hasCredential": {"@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Doctor of Economics, Yokohama National University (2025)"},
       "sameAs": [
         "https://orcid.org/0000-0002-8934-8841",
         "https://scholar.google.com/citations?user=tZ8lruQAAAAJ&hl=en",
-        "https://www.linkedin.com/in/lila-ballav-bhusal/",
+        "https://researchmap.jp/bhusal_lila",
         "https://github.com/BallavBabu",
         "https://zenodo.org/owners/149816",
-        "https://researchmap.jp/bhusal_lila"
+        "https://www.linkedin.com/in/lila-ballav-bhusal/"
       ],
       "knowsAbout": [
-        "Development economics",
-        "Structural change",
-        "International economics",
-        "Asian economies"
+        "Input-output analysis",
+        "Multiregional input-output analysis",
+        "Global value chains",
+        "Embodied carbon emissions",
+        "Social accounting matrices",
+        "Economic statistics",
+        "South Asian economies"
       ],
-      "worksFor": [
-        {
-          "@type": "Organization",
-          "name": "JICA Ogata Sadako Research Institute for Peace and Development"
-        }
-      ],
-      "description": "Research on economic development and structural change."
+      "knowsLanguage": ["en", "ja", "ne", "hi"]
     }
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFN14MV3CL"></script>
@@ -81,178 +75,219 @@
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <nav class="navbar" aria-label="Main navigation">
-        <div class="container">
-            <button type="button" class="mobile-menu-toggle" aria-controls="nav-menu" aria-expanded="false">Menu</button>
-            <ul id="nav-menu" class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#projects">Data &amp; Software</a></li>
-            </ul>
-            <label class="theme-control"><input id="themeToggle" type="checkbox"> Dark mode</label>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-name" href="./">Lila Ballav Bhusal</a>
+            <button type="button" class="menu-toggle" aria-controls="site-menu" aria-expanded="false">Menu</button>
+            <nav aria-label="Main">
+                <ul id="site-menu" class="site-menu">
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#software">Data &amp; Software</a></li>
+                    <li><a href="#presentations">Presentations</a></li>
+                    <li><a href="#teaching">Teaching</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="ja/" lang="ja" hreflang="ja">日本語</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
+
     <main id="main">
-        <section id="home" class="hero" aria-labelledby="researcher-name">
-            <div class="container hero-content">
-                <img class="profile-photo" src="files/profile.jpg" alt="Lila Ballav Bhusal" width="172" height="172">
-                <div class="hero-intro" id="about">
-                    <h1 id="researcher-name">Lila Ballav Bhusal, PhD</h1>
-                    <p class="hero-bio">My research focuses on economic development and structural change.</p>
-                    <section aria-labelledby="positions-title">
-                        <h2 id="positions-title" class="hero-affiliation">Current positions</h2>
-                        <p class="hero-affiliation"><strong>Researcher</strong> at the Graduate School of International Social Sciences, Yokohama National University.</p>
-                        <p class="hero-affiliation"><strong>Research Assistant</strong> at the JICA Ogata Sadako Research Institute for Peace and Development, working on the Mixed Migration in Asia project.</p>
-                    </section>
-                    <p class="contact-line" id="contact">Email: krish.bhula[at]gmail.com</p>
-                    <div class="profile-links" aria-label="Academic profiles">
-                        <a href="https://scholar.google.com/citations?user=tZ8lruQAAAAJ&amp;hl=en">Google Scholar</a>
-                        <a href="https://orcid.org/0000-0002-8934-8841">ORCID</a>
-                        <a href="https://github.com/BallavBabu">GitHub</a>
-                        <a href="https://researchmap.jp/bhusal_lila">researchmap</a>
-                        <a href="https://www.linkedin.com/in/lila-ballav-bhusal/">LinkedIn</a>
+        <section class="profile" aria-labelledby="name">
+            <div class="wrap">
+                <div class="profile-grid">
+                    <img class="profile-photo" src="files/profile.jpg" alt="Portrait of Lila Ballav Bhusal" width="190" height="238">
+                    <div>
+                        <h1 id="name">Lila Ballav Bhusal</h1>
+                        <p class="profile-role">PhD in Economics, Yokohama National University</p>
+                        <div class="profile-bio">
+                            <p>I am an applied economist working on input-output analysis, global value chains and the carbon embodied in trade, with a focus on South Asia and the Asia-Pacific. My recent work assigns CO₂ emissions in the global textile and clothing chain to the incomes they generate, measures how far upstream emissions sit in Asia-Pacific production, and traces remittances through social accounting matrices for Nepal, India and Bangladesh.</p>
+                            <p>I also build open tools for this work, including the <a href="https://cran.r-project.org/package=gvcAnalyzer">gvcAnalyzer</a> R package on CRAN and a harmonized panel of ADB multiregional input-output tables.</p>
+                        </div>
+                        <p class="market-note">I am seeking academic and research positions in Japan and internationally.</p>
                     </div>
+                </div>
+
+                <div class="facts">
+                    <div>
+                        <h2>Current affiliations</h2>
+                        <ul>
+                            <li>Researcher, Graduate School of International Social Sciences, Yokohama National University<span class="when">October 2025 to present</span></li>
+                            <li>Researcher, JICA Ogata Sadako Research Institute for Peace and Development, mixed migration project<span class="when">May 2026 to present</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2>Education</h2>
+                        <ul>
+                            <li>PhD in Economics, Yokohama National University<span class="when">2025</span></li>
+                            <li>MSc in Digital Business and Innovation, Tokyo International University<span class="when">2022</span></li>
+                            <li>BA in Economics, Tokyo International University<span class="when">2020</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="contact" id="contact">
+                    <p><span class="label">Email</span> bhusal-ballav-kd [at] ynu.jp</p>
+                    <ul class="link-row" aria-label="Profiles">
+                        <li><a href="cv.html">CV</a></li>
+                        <li><a href="https://scholar.google.com/citations?user=tZ8lruQAAAAJ&amp;hl=en">Google Scholar</a></li>
+                        <li><a href="https://orcid.org/0000-0002-8934-8841">ORCID</a></li>
+                        <li><a href="https://researchmap.jp/bhusal_lila">researchmap</a></li>
+                        <li><a href="https://github.com/BallavBabu">GitHub</a></li>
+                        <li><a href="https://zenodo.org/owners/149816">Zenodo</a></li>
+                        <li><a href="https://www.linkedin.com/in/lila-ballav-bhusal/">LinkedIn</a></li>
+                    </ul>
                 </div>
             </div>
         </section>
+
         <section id="research" class="section" aria-labelledby="research-title">
-            <div class="container">
-                <h2 class="section-title" id="research-title">Research</h2>
-                <div class="publications-container">
-                    <h3 class="pub-category" id="publications">Peer-reviewed publications</h3>
-                    <div id="publication-list">
-                        <article class="publication">
-                            <h4><a href="https://doi.org/10.1016/j.ecolecon.2026.109265">Benefit-principle accounting of CO₂ emissions in the global textile and clothing value chain</a></h4>
-                            <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2027).</p>
-                            <p class="pub-journal"><em>Ecological Economics</em>, 252, 109265</p>
-                            <p class="pub-abstract">February 2027 issue</p>
-                        </article>
-                        <article class="publication">
-                            <h4><a href="https://doi.org/10.1080/23322039.2026.2746219">Temporal fragmentation in the fiscal–monetary–inflation system: regime-dependent associations in Bangladesh, 1973–2025</a></h4>
-                            <p class="pub-authors">Rahman Mohammad Sayedur · <strong>Lila Ballav Bhusal</strong> · Md Masum · Taku Ishiro (2026).</p>
-                            <p class="pub-journal"><em>Cogent Economics &amp; Finance</em>, 14(1), 2746219</p>
-                        </article>
-                        <article class="publication">
-                            <h4><a href="https://doi.org/10.1007/s10668-025-07119-x">Change in the South Asian construction sector: insights from a structural decomposition approach</a></h4>
-                            <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025).</p>
-                            <p class="pub-journal"><em>Environment, Development and Sustainability</em></p>
-                        </article>
-                        <article class="publication">
-                            <h4><a href="https://doi.org/10.1016/j.aglobe.2025.100110">South Asian global value chain integration patterns: A value-added perspective</a></h4>
-                            <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025).</p>
-                            <p class="pub-journal"><em>Asia and the Global Economy</em>, 5(2), 100110</p>
-                        </article>
-                        <article class="publication">
-                            <h4><a href="https://doi.org/10.1186/s40008-025-00346-5">Key sector identification of Nepal: an integrated approach with linkage and hypothetical extraction method</a></h4>
-                            <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025).</p>
-                            <p class="pub-journal"><em>Journal of Economic Structures</em>, 14, 3</p>
-                        </article>
-                    </div>
-                    <p id="publication-status" class="visually-hidden" role="status"></p>
-                    <a class="pub-link" href="https://orcid.org/0000-0002-8934-8841">Full record on ORCID</a>
+            <div class="wrap">
+                <h2 id="research-title">Research</h2>
+
+                <h3 class="sub" id="publications">Peer-reviewed publications</h3>
+                <div id="publication-list">
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1016/j.ecolecon.2026.109265">Benefit-principle accounting of CO₂ emissions in the global textile and clothing value chain</a></h4>
+                        <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2027)</p>
+                        <p class="pub-journal"><em>Ecological Economics</em>, 252, 109265</p>
+                    </article>
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1007/s43621-026-05402-z">Trade balances of embodied carbon dioxide emissions and domestic value added in Asian economies</a></h4>
+                        <p class="pub-authors"><strong>Lila Ballav Bhusal</strong>, Mohammad Sayedur Rahman, Taku Ishiro (2026)</p>
+                        <p class="pub-journal"><em>Discover Sustainability</em></p>
+                    </article>
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1080/23322039.2026.2746219">Temporal fragmentation in the fiscal–monetary–inflation system: regime-dependent associations in Bangladesh, 1973–2025</a></h4>
+                        <p class="pub-authors">Mohammad Sayedur Rahman, <strong>Lila Ballav Bhusal</strong>, Md Masum, Taku Ishiro (2026)</p>
+                        <p class="pub-journal"><em>Cogent Economics &amp; Finance</em>, 14(1), 2746219</p>
+                    </article>
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1007/s10668-025-07119-x">Change in the South Asian construction sector: insights from a structural decomposition approach</a></h4>
+                        <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025)</p>
+                        <p class="pub-journal"><em>Environment, Development and Sustainability</em></p>
+                    </article>
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1016/j.aglobe.2025.100110">South Asian global value chain integration patterns: A value-added perspective</a></h4>
+                        <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025)</p>
+                        <p class="pub-journal"><em>Asia and the Global Economy</em>, 5(2), 100110</p>
+                    </article>
+                    <article class="publication">
+                        <h4><a href="https://doi.org/10.1186/s40008-025-00346-5">Key sector identification of Nepal: an integrated approach with linkage and hypothetical extraction method</a></h4>
+                        <p class="pub-authors"><strong>Lila Ballav Bhusal</strong> (2025)</p>
+                        <p class="pub-journal"><em>Journal of Economic Structures</em>, 14, 3</p>
+                    </article>
+                </div>
+                <p id="publication-status" class="visually-hidden" role="status"></p>
+                <p class="more"><a href="https://orcid.org/0000-0002-8934-8841">Full record on ORCID</a></p>
+
+                <h3 class="sub">Working papers</h3>
+                <div id="working-papers">
+<!-- working-papers:start -->
+<article class="paper"><h4 class="paper-title">A capacity-feasibility test for the global extraction method</h4><p class="paper-byline"><strong>Lila Ballav Bhusal</strong> (2026)</p><p class="paper-status">Under review</p></article>
+<article class="paper"><h4 class="paper-title">Foreign personal transfers and gross import payments: A social accounting matrix analysis of Nepal, India and Bangladesh</h4><p class="paper-byline"><strong>Lila Ballav Bhusal</strong>, Mohammad Sayedur Rahman, Taku Ishiro, Md Masum, Muhammad Shariat Ullah (2026)</p><p class="paper-status">Under review</p></article>
+<article class="paper"><h4 class="paper-title">Measuring the source distance of embodied CO₂ in Asia-Pacific global value chains</h4><p class="paper-byline"><strong>Lila Ballav Bhusal</strong>, Prajal Pradhan (2026)</p><p class="paper-status">Presented at the 37th PAPAIOS Annual Conference, November 2026</p></article>
+<article class="paper"><h4 class="paper-title">Personalisation, not professionalisation: Converging ChatGPT use across developing Asia, with evidence from Bangladesh</h4><p class="paper-byline">Mohammad Sayedur Rahman, <strong>Lila Ballav Bhusal</strong>, Md Masum, Taku Ishiro (2026)</p><p class="paper-status">Under review</p></article>
+<article class="paper"><h4 class="paper-title">Blaming the state, not the river: Hazard attribution and government legitimacy in Bangladesh</h4><p class="paper-byline">Mohammad Sayedur Rahman, <strong>Lila Ballav Bhusal</strong>, Md Masum, M. B. Hossain, Taku Ishiro (2026)</p><p class="paper-status">Under review</p></article>
+<article class="paper"><h4 class="paper-title">Green by poverty, not by policy: The hidden energy-transition gap in least developed country graduation</h4><p class="paper-byline">Mohammad Sayedur Rahman, <strong>Lila Ballav Bhusal</strong>, Md Masum, Muhammad Shariat Ullah, Taku Ishiro (2026)</p><p class="paper-status">Under review</p></article>
+<article class="paper"><h4 class="paper-title">Modelling the impact of IoT and AI on operations analytics in the textile and apparel industry</h4><p class="paper-byline">Mohammad Sayedur Rahman, Md Masum, S. Mahjabin, A. Habib, M. G. S. Rayhan, <strong>Lila Ballav Bhusal</strong>, Taku Ishiro (2026)</p><p class="paper-status">Under review</p></article>
+<!-- working-papers:end -->
+                </div>
+
+                <h3 class="sub">Work in progress</h3>
+                <div id="work-in-progress">
+<!-- work-in-progress:start -->
+<article class="paper paper-wip"><h4 class="paper-title">Bilateral income flows by industry in Asia and the Pacific</h4><p class="paper-byline">with Nagendra Shrestha</p></article>
+<article class="paper paper-wip"><h4 class="paper-title">Import prices and household food costs in South Asia</h4><p class="paper-byline">with Michael L. Lahr</p></article>
+<article class="paper paper-wip"><h4 class="paper-title">Value-added distribution in textile and clothing trade</h4><p class="paper-byline">with Md Masum and Muhammad Shariat Ullah</p></article>
+<article class="paper paper-wip"><h4 class="paper-title">Remittances, external uncertainty and GVC positions in developing Asia</h4></article>
+<!-- work-in-progress:end -->
                 </div>
             </div>
         </section>
-        <section id="projects" class="section bg-light" aria-labelledby="resources-title">
-            <div class="container">
-                <h2 id="resources-title" class="section-title">Data &amp; Software</h2>
-                <div class="publications-container">
-                    <h3 class="pub-category">Data</h3>
-                    <article class="publication">
-                        <h4><a href="https://doi.org/10.5281/zenodo.17694852">Harmonized ADB multi-regional input-output panel</a></h4>
-                        <p>Current-price tables for 35 sectors in 62 economies plus the rest of the world.
-                            The panel covers 19 years: 2000 and 2007–2024.</p>
-                    </article>
-                    <article class="publication">
-                        <h4><a href="https://doi.org/10.5281/zenodo.17671302">ADB data for the adbmrio package</a></h4>
-                        <p>Preprocessed matrices for bilateral trade and value-added analysis in R, covering benchmark years between 2000 and 2023.</p>
-                    </article>
-                    <h3 class="pub-category">R packages</h3>
-                    <article class="publication">
-                        <h4><a href="https://cran.r-project.org/package=gvcAnalyzer">gvcAnalyzer</a></h4>
-                        <p>I created and maintain this R package for measuring value-added trade and participation in global value chains.</p>
-                        <p class="resource-links"><a href="https://doi.org/10.32614/CRAN.package.gvcAnalyzer">Software citation</a></p>
-                    </article>
-                    <article class="publication">
-                        <h4><a href="https://github.com/BallavBabu/adbmrio">adbmrio</a></h4>
-                        <p>I developed this R package to decompose bilateral exports and account for embodied emissions using ADB tables.</p>
-                    </article>
-                </div>
+
+        <section id="software" class="section" aria-labelledby="software-title">
+            <div class="wrap">
+                <h2 id="software-title">Data &amp; Software</h2>
+
+                <h3 class="sub">R packages</h3>
+                <article class="item">
+                    <h4><a href="https://cran.r-project.org/package=gvcAnalyzer">gvcAnalyzer</a></h4>
+                    <p class="item-meta">CRAN, 2025</p>
+                    <p>Measures value-added trade and participation in global value chains from multiregional input-output tables. I created and maintain it.</p>
+                    <p class="item-links"><a href="https://cran.r-project.org/package=gvcAnalyzer">CRAN</a> <a href="https://doi.org/10.32614/CRAN.package.gvcAnalyzer">Software citation</a></p>
+                </article>
+                <article class="item">
+                    <h4><a href="https://github.com/BallavBabu/adbmrio">adbmrio</a></h4>
+                    <p class="item-meta">GitHub, 2025</p>
+                    <p>Processes ADB multiregional input-output tables, decomposes domestic value added in bilateral exports and computes trade-embodied CO₂.</p>
+                    <p class="item-links"><a href="https://github.com/BallavBabu/adbmrio">GitHub</a></p>
+                </article>
+
+                <h3 class="sub">Data</h3>
+                <article class="item">
+                    <h4><a href="https://doi.org/10.5281/zenodo.17694852">Harmonized ADB multiregional input-output panel, current prices, 2000 to 2024</a></h4>
+                    <p class="item-meta">Zenodo, 2025</p>
+                    <p>Tables for 35 sectors in 62 economies plus the rest of the world, covering 2000 and 2007 to 2024.</p>
+                </article>
+                <article class="item">
+                    <h4><a href="https://doi.org/10.5281/zenodo.17671302">ADB data for the adbmrio package</a></h4>
+                    <p class="item-meta">Zenodo, 2025</p>
+                    <p>Preprocessed matrices for bilateral trade and value-added analysis in R, for benchmark years between 2000 and 2023.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="presentations" class="section" aria-labelledby="presentations-title">
+            <div class="wrap">
+                <h2 id="presentations-title">Presentations</h2>
+                <ul class="plain-list">
+                    <li>Measuring the source distance of embodied CO₂ in Asia-Pacific global value chains<span class="meta">37th Annual Conference of the Pan-Pacific Association of Input-Output Studies (PAPAIOS), Fukuyama City University, November 2026</span></li>
+                    <li>Decomposing benefit-based emissions accounting into factor-income and product-tax channels<span class="meta">32nd International Input-Output Association Conference, Seville, June 2026</span></li>
+                    <li>Civil unrest shocks in production networks: modeling propagation under dual constraints<span class="meta">Korean Association of Economic Systems Research Annual Conference, Chung-Ang University, Seoul, February 2026</span></li>
+                    <li>The carbon costs of growth: a decomposition of global value chains in Asia<span class="meta">20th East Asian Economic Association International Convention, Manila, November 2025</span></li>
+                    <li>Economic upgrading: strategies for moving beyond low-cost assembly (invited talk)<span class="meta">Madhyabindu Multiple Campus, Tribhuvan University, August 2025</span></li>
+                    <li>Decomposing South Asian GVC integration patterns<span class="meta">9th International Conference on Economic Structures, Chiba University of Commerce, March 2025</span></li>
+                    <li>Decomposing growth in the South Asian construction sector<span class="meta">19th East Asian Economic Association International Convention, Bangkok, November 2024</span></li>
+                    <li>Key sector identification of Nepal<span class="meta">8th International Conference on Economic Structures, Kindai University, March 2024</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="teaching" class="section" aria-labelledby="teaching-title">
+            <div class="wrap">
+                <h2 id="teaching-title">Teaching</h2>
+                <ul class="plain-list">
+                    <li>Economic Modelling, undergraduate, taught in English with R exercises<span class="meta">Lecturer, Lumbini Adarsha Degree College, Nepal, 2025 to 2026</span></li>
+                    <li>Research Methods, graduate, taught in English<span class="meta">Teaching support, Yokohama National University, 2023 to 2024</span></li>
+                    <li>Undergraduate English discussion course<span class="meta">Teaching Assistant, Yokohama National University, 2022 to 2023</span></li>
+                    <li>Business Mathematics and Statistics<span class="meta">Teaching Assistant, Tokyo International University, 2021 to 2022</span></li>
+                </ul>
             </div>
         </section>
     </main>
-    <footer class="footer">
-        <div class="container"><a href="#contact">Contact</a></div>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>Lila Ballav Bhusal, Graduate School of International Social Sciences, Yokohama National University, Yokohama, Japan</p>
+            <p>bhusal-ballav-kd [at] ynu.jp · Last updated November 2026</p>
+        </div>
     </footer>
+
     <script id="publication-snapshot" type="application/json">
     [
-      {
-        "title": "Benefit-principle accounting of CO₂ emissions in the global textile and clothing value chain",
-        "year": "2027",
-        "doi": "10.1016/j.ecolecon.2026.109265",
-        "journal": "Ecological Economics",
-        "authors": [
-          "Lila Ballav Bhusal"
-        ],
-        "citation": "252, 109265",
-        "note": "February 2027 issue",
-        "sortDate": "2027-02"
-      },
-      {
-        "title": "Temporal fragmentation in the fiscal–monetary–inflation system: regime-dependent associations in Bangladesh, 1973–2025",
-        "year": "2026",
-        "doi": "10.1080/23322039.2026.2746219",
-        "journal": "Cogent Economics & Finance",
-        "authors": [
-          "Rahman Mohammad Sayedur",
-          "Lila Ballav Bhusal",
-          "Md Masum",
-          "Taku Ishiro"
-        ],
-        "citation": "14(1), 2746219",
-        "note": "",
-        "sortDate": "2026-10-14"
-      },
-      {
-        "title": "Change in the South Asian construction sector: insights from a structural decomposition approach",
-        "year": "2025",
-        "doi": "10.1007/s10668-025-07119-x",
-        "journal": "Environment, Development and Sustainability",
-        "citation": "",
-        "sortDate": "2025-12-10",
-        "authors": [
-          "Lila Ballav Bhusal"
-        ],
-        "note": ""
-      },
-      {
-        "title": "South Asian global value chain integration patterns: A value-added perspective",
-        "year": "2025",
-        "doi": "10.1016/j.aglobe.2025.100110",
-        "journal": "Asia and the Global Economy",
-        "citation": "5(2), 100110",
-        "sortDate": "2025-12",
-        "authors": [
-          "Lila Ballav Bhusal"
-        ],
-        "note": ""
-      },
-      {
-        "title": "Key sector identification of Nepal: an integrated approach with linkage and hypothetical extraction method",
-        "year": "2025",
-        "doi": "10.1186/s40008-025-00346-5",
-        "journal": "Journal of Economic Structures",
-        "citation": "14, 3",
-        "sortDate": "2025-02-08",
-        "authors": [
-          "Lila Ballav Bhusal"
-        ],
-        "note": ""
-      }
+      {"title": "Benefit-principle accounting of CO₂ emissions in the global textile and clothing value chain", "year": "2027", "doi": "10.1016/j.ecolecon.2026.109265", "journal": "Ecological Economics", "authors": ["Lila Ballav Bhusal"], "citation": "252, 109265", "note": "", "sortDate": "2027-02"},
+      {"title": "Trade balances of embodied carbon dioxide emissions and domestic value added in Asian economies", "year": "2026", "doi": "10.1007/s43621-026-05402-z", "journal": "Discover Sustainability", "authors": ["Lila Ballav Bhusal", "Mohammad Sayedur Rahman", "Taku Ishiro"], "citation": "", "note": "", "sortDate": "2026-11-23"},
+      {"title": "Temporal fragmentation in the fiscal–monetary–inflation system: regime-dependent associations in Bangladesh, 1973–2025", "year": "2026", "doi": "10.1080/23322039.2026.2746219", "journal": "Cogent Economics & Finance", "authors": ["Mohammad Sayedur Rahman", "Lila Ballav Bhusal", "Md Masum", "Taku Ishiro"], "citation": "14(1), 2746219", "note": "", "sortDate": "2026-10-14"},
+      {"title": "Change in the South Asian construction sector: insights from a structural decomposition approach", "year": "2025", "doi": "10.1007/s10668-025-07119-x", "journal": "Environment, Development and Sustainability", "authors": ["Lila Ballav Bhusal"], "citation": "", "note": "", "sortDate": "2025-12-10"},
+      {"title": "South Asian global value chain integration patterns: A value-added perspective", "year": "2025", "doi": "10.1016/j.aglobe.2025.100110", "journal": "Asia and the Global Economy", "authors": ["Lila Ballav Bhusal"], "citation": "5(2), 100110", "note": "", "sortDate": "2025-07-02"},
+      {"title": "Key sector identification of Nepal: an integrated approach with linkage and hypothetical extraction method", "year": "2025", "doi": "10.1186/s40008-025-00346-5", "journal": "Journal of Economic Structures", "authors": ["Lila Ballav Bhusal"], "citation": "14, 3", "note": "", "sortDate": "2025-02-08"}
     ]
     </script>
-    <script src="script.js?v=20261123b"></script>
-    <script src="publication-model.js?v=20261123b"></script>
-    <script src="publications.js?v=20261123b"></script>
+    <script src="site-config.js?v=20261127"></script>
+    <script src="script.js?v=20261127"></script>
+    <script src="working-papers.js?v=20261127"></script>
+    <script src="publication-model.js?v=20261127"></script>
+    <script src="publications.js?v=20261127"></script>
 </body>
 </html>
