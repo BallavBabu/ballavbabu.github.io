@@ -1,0 +1,17 @@
+Lila Ballav Bhusal | GitHub Pages
+1. Extract this ZIP. Upload the contents of the site folder into the existing GitHub Pages publishing directory, alongside or replacing your existing index.html. Do not upload the ZIP or the enclosing site folder.
+2. Retain the existing Pages branch, publishing folder, workflows and repository settings. Commit the files using your normal deployment process. Open https://ballavbabu.github.io/ after the Pages deployment finishes.
+3. Open Research, then Working Papers. Visitors see titles, authors, dates, statuses and optional paper links directly on that page.
+4. To update your CV, replace files/CV_Lila_Ballav_Bhusal.pdf with the new PDF using the same filename and capitalization.
+
+Editing working papers
+https://docs.google.com/spreadsheets/d/1OSeIO3w1AOb0M-2p6pozApKrCRnOkRHOk3WHqws-wYM/edit
+Use the Working Papers tab. Start in row 2. Enter Title, Authors, Date, Status and optional Paper URL in columns A through E. Pick a status from the dropdown. Use a normal web address for the paper. The website displays rows in sheet order. Clear the title or delete a row to remove its entry.
+The spreadsheet has public read access. Use it only for material intended for publication. Only the owner or an explicitly added editor can change it. The visitor page displays the entries itself.
+The page reads the sheet on opening, when the visitor returns to the tab, and every 30 seconds while visible. Google can take additional time to serve an edit. No new GitHub commit is required for sheet changes.
+
+Publications
+The homepage checks ORCID 0000-0002-8934-8841 on load, while open every 10 minutes, and when a visitor returns to the tab (subject to a one-minute retry interval). New public journal articles appear from the ORCID record. Private works and non-journal outputs are outside the journal list. All six current citations are included for offline display. The software and datasets remain in their own section.
+
+After deployment
+Check the circular portrait, CV PDF, Research tabs, and your Analytics Realtime report. Open Working Papers and add your first paper in the sheet. Leave the website tab visible for a refresh. Changes to the photo, CV or site files use the normal GitHub deployment process.

@@ -1,111 +1,84 @@
-// Reads the Working Papers Google Sheet and refreshes the two lists on the page.
-// The page already contains a copy written by the GitHub Action, so if the
-// sheet cannot be reached nothing changes. Output matches
-// scripts/sync_working_papers.py exactly.
-(function (root) {
+(() => {
   'use strict';
-  const OWN = new Set(['lila ballav bhusal', 'bhusal lila ballav', 'l b bhusal',
-    'bhusal l b', 'lila bhusal', 'bhusal lila']);
-  const SECTIONS = {'working paper': 'working-papers', 'work in progress': 'work-in-progress'};
-  const LINK = /^(https:\/\/[^\s"'<>]+|files\/[\w./-]+)$/;
-
-  function parseCSV(text) {
-    const rows = []; let row = [], field = '', quoted = false;
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      if (quoted) {
-        if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
-        else if (c === '"') quoted = false;
-        else field += c;
-      } else if (c === '"') quoted = true;
-      else if (c === ',') { row.push(field); field = ''; }
-      else if (c === '\n' || c === '\r') {
-        if (c === '\r' && text[i + 1] === '\n') i++;
-        row.push(field); rows.push(row); row = []; field = '';
-      } else field += c;
-    }
-    if (field !== '' || row.length) { row.push(field); rows.push(row); }
-    return rows;
+  const sheet = 'https://docs.google.com/spreadsheets/d/1OSeIO3w1AOb0M-2p6pozApKrCRnOkRHOk3WHqws-wYM';
+  const list = document.querySelector('#working-list');
+  const status = document.querySelector('#paper-status');
+  const interval = 30000;
+  let pending = false;
+  let sequence = 0;
+  let previous;
+  function node(tag, text, className) {
+    const element = document.createElement(tag);
+    element.textContent = text;
+    if (className) element.className = className;
+    return element;
   }
-  const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
-  const isOwn = n => OWN.has(n.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim());
-  const safeLink = v => { v = (v || '').trim(); return LINK.test(v) ? v : ''; };
-  const splitAuthors = v => (v || '').split(',').map(a => a.trim()).filter(Boolean);
-  const joinAnd = n => n.length <= 1 ? n.join('') : n.slice(0, -1).join(', ') + ' and ' + n[n.length - 1];
-  const paragraphs = t => t.trim().split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
-    .map(p => '<p>' + esc(p) + '</p>').join('');
-
-  function parseRows(text) {
-    text = text.replace(/^﻿/, '');
-    if (/^\s*</.test(text)) throw new Error('Not CSV');
-    const table = parseCSV(text);
-    const head = (table.shift() || []).map(h => h.trim().toLowerCase());
-    for (const need of ['show', 'section', 'title', 'authors'])
-      if (!head.includes(need)) throw new Error('Missing column ' + need);
-    const rows = [];
-    for (const cells of table) {
-      const row = {};
-      head.forEach((h, i) => { row[h] = (cells[i] || '').trim(); });
-      if (!['yes', 'true', 'y', '1'].includes((row.show || '').toLowerCase())) continue;
-      const section = SECTIONS[(row.section || '').toLowerCase()];
-      if (!section || !row.title) continue;
-      const order = parseFloat(row.order);
-      row._section = section; row._order = Number.isFinite(order) ? order : 999;
-      rows.push(row);
+  function render(table) {
+    if (!Array.isArray(table?.rows) || !Array.isArray(table.cols)) throw Error('Invalid feed');
+    const rows = table.rows.map(row => table.cols.map((_, i) => {
+      const cell = row.c?.[i];
+      return String(cell?.f ?? cell?.v ?? '').trim();
+    })).filter(row => row[0]);
+    const fingerprint = JSON.stringify(rows);
+    if (fingerprint !== previous) {
+      const items = document.createDocumentFragment();
+      for (const [title, authors, date, stage, url] of rows) {
+        const article = node('article', '', 'working-paper');
+        article.append(node('h2', title));
+        if (authors) article.append(node('p', authors));
+        const metadata = [stage, date].filter(Boolean).join(' · ');
+        if (metadata) article.append(node('p', metadata, 'stage'));
+        if (url) {
+          try {
+            const address = new URL(url);
+            if (['https:', 'http:'].includes(address.protocol)) {
+              const link = node('a', 'Read paper');
+              link.href = address.href;
+              article.append(link);
+            }
+          } catch { /* The title remains readable without a valid URL. */ }
+        }
+        items.append(article);
+      }
+      list.replaceChildren(items);
+      previous = fingerprint;
     }
-    // Same ordering as Python: order, then title (case-insensitive, code-point order).
-    return rows.sort((a, b) => a._order - b._order ||
-      (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : a.title.toLowerCase() > b.title.toLowerCase() ? 1 : 0));
+    status.textContent = rows.length ? '' : 'No working papers are listed yet.';
   }
-
-  function renderItem(row, wip) {
-    const title = esc(row.title), paper = safeLink(row.paper_url);
-    const head = paper ? '<a href="' + esc(paper) + '">' + title + '</a>' : title;
-    const out = ['<article class="paper' + (wip ? ' paper-wip' : '') + '">',
-      '<h4 class="paper-title">' + head + '</h4>'];
-    const authors = splitAuthors(row.authors);
-    if (wip) {
-      const others = authors.filter(a => !isOwn(a));
-      if (others.length) out.push('<p class="paper-byline">with ' + esc(joinAnd(others)) + '</p>');
-    } else if (authors.length) {
-      const names = authors.map(a => isOwn(a) ? '<strong>' + esc(a) + '</strong>' : esc(a)).join(', ');
-      out.push('<p class="paper-byline">' + names + (row.year ? ' (' + esc(row.year) + ')' : '') + '</p>');
-    }
-    if (row.status || row.venue) {
-      const bits = row.status ? [esc(row.status)] : [];
-      if (row.venue) bits.push('<em>' + esc(row.venue) + '</em>');
-      out.push('<p class="paper-status">' + bits.join(', ') + '</p>');
-    }
-    const links = [[paper, 'Paper'], [safeLink(row.code_url), 'Code'], [safeLink(row.slides_url), 'Slides']]
-      .filter(([u]) => u).map(([u, l]) => '<a href="' + esc(u) + '">' + l + '</a>');
-    if (links.length) out.push('<p class="paper-links">' + links.join(' ') + '</p>');
-    if (row.abstract) out.push('<details class="paper-abstract"><summary>Abstract</summary>' + paragraphs(row.abstract) + '</details>');
-    out.push('</article>');
-    return out.join('');
+  function failed() {
+    status.textContent = previous
+      ? 'Showing the last list received. Checking again shortly.'
+      : 'Working papers are temporarily unavailable. Checking again shortly.';
   }
-
-  function renderSection(rows, section) {
-    const items = rows.filter(r => r._section === section).map(r => renderItem(r, section === 'work-in-progress'));
-    return items.length ? items.join('\n') : '<p class="empty-note">No entries at present.</p>';
+  function refresh() {
+    if (pending || document.hidden) return;
+    pending = true;
+    const callback = 'workingPapersResponse' + (++sequence);
+    const script = document.createElement('script');
+    const url = new URL(sheet + '/gviz/tq');
+    url.search = new URLSearchParams({gid:'0', headers:'1', range:'A:E',
+      tqx:'out:json;responseHandler:' + callback, _:String(Date.now())});
+    const finish = () => {
+      clearTimeout(timer);
+      delete window[callback];
+      script.remove();
+      pending = false;
+    };
+    window[callback] = response => {
+      try {
+        if (response.status !== 'ok') throw Error('Sheet unavailable');
+        render(response.table);
+      } catch { failed(); }
+      finally { finish(); }
+    };
+    script.onerror = () => { failed(); finish(); };
+    const timer = setTimeout(script.onerror, 12000);
+    script.src = url.href;
+    script.referrerPolicy = 'no-referrer';
+    document.head.append(script);
   }
-
-  root.WorkingPapers = {parseCSV, parseRows, renderSection};
-  if (typeof document === 'undefined') return;
-
-  const config = root.SITE_CONFIG || {};
-  const targets = Object.values(SECTIONS).map(id => [id, document.getElementById(id)]).filter(([, el]) => el);
-  if (!config.sheetId || !targets.length) return;
-  const url = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(config.sheetId) +
-    '/gviz/tq?tqx=out:csv&headers=1&sheet=' + encodeURIComponent(config.sheetName || 'WorkingPapers');
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  fetch(url, {credentials: 'omit', signal: controller.signal})
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-    .then(text => {
-      const rows = parseRows(text);
-      for (const [id, el] of targets) el.innerHTML = renderSection(rows, id);
-    })
-    .catch(() => { /* Keep the copy already in the page. */ })
-    .finally(() => clearTimeout(timer));
-})(typeof window === 'undefined' ? globalThis : window);
+  refresh();
+  window.setInterval(refresh, interval);
+  document.addEventListener('visibilitychange', refresh);
+  window.addEventListener('pageshow', e => { if (e.persisted) refresh(); });
+})();
