@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Curriculum vitae | Lila Ballav Bhusal</title>
-<meta name="description" content="Research by Lila Ballav Bhusal on economic development, global value chains and embodied carbon emissions in Asia.">
+<meta name="description" content="Curriculum vitae of Lila Ballav Bhusal, an economist based in Japan.">
 <link rel="canonical" href="https://ballavbabu.github.io/cv.html">
 <link rel="icon" href="files/profile.jpg"><link rel="stylesheet" href="styles.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFN14MV3CL"></script>
@@ -15,8 +15,21 @@
 
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><div class="bar"><a class="wordmark" href="index.html#home">Lila Ballav Bhusal</a>
-<nav aria-label="Main navigation"><a href="index.html#research">Research</a><a href="index.html#projects">Data &amp; Software</a><a href="index.html#teaching">Teaching</a><a href="files/CV_Lila_Ballav_Bhusal.pdf">CV <small>PDF</small></a></nav>
+<nav aria-label="Main navigation"><a href="index.html#research">Research</a><a href="index.html#projects">Data &amp; Software</a><a href="cv.html">CV</a></nav>
 <button id="themeToggle" aria-label="Dark mode" aria-pressed="false" title="Toggle dark mode"><span aria-hidden="true">◐</span></button></div></header>
-<main id="main"><section class="inner"><h1>Curriculum vitae</h1><p>Lila Ballav Bhusal, PhD</p><a class="button" href="files/CV_Lila_Ballav_Bhusal.pdf">Open CV (PDF)</a> <a href="files/CV_Lila_Ballav_Bhusal.pdf" download>Download CV</a></section></main>
+<main id="main"><section class="inner"><h1>Curriculum vitae</h1><p>Lila Ballav Bhusal, PhD</p><p id="cv-status">The revised CV will be available here.</p>
+<a id="cv-download" href="files/CV_Lila_Ballav_Bhusal.pdf" hidden>Download CV (PDF)</a>
+<script>
+(async () => {
+  const link = document.getElementById('cv-download');
+  try {
+    const response = await fetch(link.href, {method: 'HEAD', cache: 'no-store'});
+    if (response.ok && response.headers.get('content-type')?.includes('application/pdf')) {
+      link.hidden = false;
+      document.getElementById('cv-status').hidden = true;
+    }
+  } catch { /* Keep the availability message visible while offline. */ }
+})();
+</script></section></main>
 <footer><span>Lila Ballav Bhusal · Japan</span><a href="index.html#contact">Contact</a></footer>
 <script src="script.js"></script></body></html>
